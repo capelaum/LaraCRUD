@@ -11,6 +11,10 @@ class HomeController extends Controller
     {
         $products = Product::all();
 
+        foreach ($products as $product) {
+            $product->cover = Product::getProductCoverPath($product);
+        }
+
         return view('home', [
             'products' => $products
         ]);

@@ -44,20 +44,8 @@
                     <tr class="even:bg-gray-100 odd:bg-white">
                         <td class="px-4 py-3">{{ $product->id }}</td>
                         <td class="px-4 py-3">
-
-                            @php
-                            if($product->cover) {
-                            $cover = Storage::disk('public')->url($product->cover);
-                            if (Str::contains($product->cover, 'https://via.placeholder.com')) {
-                            $cover = $product->cover;
-                            }
-                            } else {
-                            $cover = "https://dummyimage.com/800x450";
-                            }
-                            @endphp
-
-                            <img alt="{{ $product->name }}" class="object-cover object-center w-full h-[80px]  block"
-                                src="{{ $cover }}" />
+                            <img alt="{{ $product->name }}" class="object-cover object-center w-full h-[80px] block"
+                                src="{{ $product->cover }}" />
                         </td>
                         <td class="px-4 py-3">{{ $product->name }}</td>
                         <td class="px-4 py-3">R${{ $product->price }}</td>

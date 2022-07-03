@@ -61,22 +61,11 @@
                         </div>
                     </div>
 
-                    @if ($product->cover)
+                    @if ($product->cover && !Str::contains($product->cover, 'https://dummyimage.com'))
                     <div class="p-2 w-full flex flex-col items-center">
-                        @php
-                        if($product->cover) {
-                        $cover = Storage::disk('public')->url($product->cover);
-                        if (Str::contains($product->cover, 'https://via.placeholder.com')) {
-                        $cover = $product->cover;
-                        }
-                        } else {
-                        $cover = "https://dummyimage.com/800x450";
-                        }
-                        @endphp
 
-
-                        <img src="{{ $cover }}" alt="{{ $product->name }}"
-                            class="object-cover object-center w-full  block" />
+                        <img src="{{ $product->cover }}" alt="{{ $product->name }}"
+                            class="object-cover object-center w-full block" />
 
                         <a href="{{ route('admin.product.destroyImage', $product->id) }}"
                             class="my-2 inline-flex items-center bg-red-500 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded text-white">Deletar

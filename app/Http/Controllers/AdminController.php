@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductFormRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -14,6 +13,10 @@ class AdminController extends Controller
     public function index()
     {
         $products = Product::all();
+
+        foreach ($products as $product) {
+            $product->cover = Product::getProductCoverPath($product);
+        }
 
         return view('admin.products', compact('products'));
     }
@@ -41,6 +44,8 @@ class AdminController extends Controller
 
     public function edit(Product $product)
     {
+        $product->cover = Product::getProductCoverPath($product);
+
         return view('admin.product_edit', compact('product'));
     }
 

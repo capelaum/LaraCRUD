@@ -9,6 +9,8 @@ class ProductController extends Controller
 {
     public function show(Product $product)
     {
+        $product->cover = Product::getProductCoverPath($product);
+
         return view('product', [
             'product' => $product
         ]);
