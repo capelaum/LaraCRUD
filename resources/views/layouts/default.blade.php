@@ -10,8 +10,8 @@
     <title>@yield('title') | CRUD de Produtos</title>
 </head>
 
-<body>
-    <header class="text-gray-600">
+<body class="flex flex-col min-h-screen">
+    <header>
         <div class="container mx-auto flex justify-between p-5 items-center">
             <a href="/" class="flex title-font font-medium items-center text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -35,7 +35,9 @@
         </div>
     </header>
 
-    @yield('content')
+    <main class="grow">
+        @yield('content')
+    </main>
 
     <footer class="text-gray-600">
         <div class="border-t border-gray-200">

@@ -9,8 +9,10 @@
                 <h1 class="text-2xl font-medium title-font mb-2 text-gray-900">
                     Produtos
                 </h1>
-                <a
-                    class="flex ml-auto text-white bg-indigo-500 border-0 py-1.5 px-3 text-sm focus:outline-none hover:bg-indigo-600 rounded">Adicionar</a>
+                <a href="{{ route('admin.product.create') }}"
+                    class="flex ml-auto text-white bg-indigo-500 border-0 py-1.5 px-3 text-sm focus:outline-none hover:bg-indigo-600 rounded">
+                    Adicionar
+                </a>
             </div>
             <table class="table-auto w-full text-left whitespace-no-wrap">
                 <thead>
@@ -42,8 +44,17 @@
                     <tr class="even:bg-gray-100 odd:bg-white">
                         <td class="px-4 py-3">{{ $product->id }}</td>
                         <td class="px-4 py-3">
-                            <img alt="ecommerce" class="object-cover object-center w-full h-full block"
-                                src="{{ $product->cover }}" />
+                            @php
+                            if ($product->cover && Str::contains($product->cover, 'https://via.placeholder.com')) {
+                            $cover = $product->cover;
+                            } else if($product->cover) {
+                            $cover = Storage::disk('public')->url($product->cover);
+                            } else {
+                            $cover = "https://dummyimage.com/800x450";
+                            }
+                            @endphp
+                            <img alt="{{ $product->name }}" class="object-cover object-center w-full h-full block"
+                                src="{{ $cover }}" />
                         </td>
                         <td class="px-4 py-3">{{ $product->name }}</td>
                         <td class="px-4 py-3">R${{ $product->price }}</td>
