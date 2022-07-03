@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductFormRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AdminController extends Controller
@@ -22,19 +24,9 @@ class AdminController extends Controller
         return view('admin.product_create');
     }
 
-    public function store(Request $request)
+    public function store(StoreProductFormRequest $request)
     {
-        $input = $request->validate([
-            'name' => 'required|string|min:3|max:100|unique:products',
-            'price' => 'string|required',
-            'stock' => 'integer|nullable',
-            'description' => 'string|required',
-            'cover' => [
-                'file',
-                'nullable',
-                'mimes:jpg,png'
-            ],
-        ]);
+        $input = $request->all();
 
         $input['slug'] = Str::slug($input['name']);
 
@@ -48,14 +40,43 @@ class AdminController extends Controller
         return Redirect::route('admin.products');
     }
 
-    public function edit()
+    public function edit(Product $product)
     {
-
-        return view('admin.product_edit');
+        return view('admin.product_edit', compact('product'));
     }
 
-    public function update()
+    public function update(StoreProductFormRequest $request, Product $product)
     {
-        echo 'Update';
+        $input = $request->validated();
+
+        $input['cover'] = $this->handleCoverImage($product->cover, $input['cover'] ?? null);
+
+        $product->fill($input);
+        $product->save();
+
+        return Redirect::route('admin.products');
+    }
+
+    public function handleCoverImage(?string $productCover, ?object $inputCover)
+    {
+        // Imagem Vazia
+        if (empty($inputCover)) {
+
+            // Imagem vazia e produto tinha imagem salva
+            if ($productCover && Storage::exists("public/{$productCover}")) {
+                Storage::delete("public/{$productCover}");
+            }
+
+            $inputCover = null;
+        }
+
+        // Imagem não vazia e valida
+        if (!empty($inputCover) && $inputCover->isValid()) {
+            Storage::delete("public/{$productCover}" ?? '');
+            $path = $inputCover->store('products_covers', 'public');
+            $inputCover = $path;
+        }
+
+        return $inputCover;
     }
 }
