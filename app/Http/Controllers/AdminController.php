@@ -20,7 +20,6 @@ class AdminController extends Controller
 
     public function create()
     {
-
         return view('admin.product_create');
     }
 
@@ -49,7 +48,11 @@ class AdminController extends Controller
     {
         $input = $request->validated();
 
-        $input['cover'] = $this->handleCoverImage($product->cover, $input['cover'] ?? null);
+        if (!empty($input['cover']) && $input['cover']->isValid()) {
+            Storage::delete("public/{$product->cover}" ?? '');
+            $path = $input['cover']->store('products_covers', 'public');
+            $input['cover'] = $path;
+        }
 
         $product->fill($input);
         $product->save();
@@ -57,33 +60,19 @@ class AdminController extends Controller
         return Redirect::route('admin.products');
     }
 
-    public function handleCoverImage(?string $productCover, ?object $inputCover)
-    {
-        // Imagem Vazia
-        if (empty($inputCover)) {
-
-            // Imagem vazia e produto tinha imagem salva
-            if ($productCover && Storage::exists("public/{$productCover}")) {
-                Storage::delete("public/{$productCover}");
-            }
-
-            $inputCover = null;
-        }
-
-        // Imagem não vazia e valida
-        if (!empty($inputCover) && $inputCover->isValid()) {
-            Storage::delete("public/{$productCover}" ?? '');
-            $path = $inputCover->store('products_covers', 'public');
-            $inputCover = $path;
-        }
-
-        return $inputCover;
-    }
-
     public function destroy(Product $product)
     {
         $product->delete();
 
         return Redirect::route('admin.products');
+    }
+
+    public function destroyImage(Product $product)
+    {
+        Storage::delete("public/{$product->cover}" ?? '');
+        $product->cover = null;
+        $product->save();
+
+        return Redirect::back();
     }
 }

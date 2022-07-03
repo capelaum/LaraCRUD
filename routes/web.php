@@ -19,4 +19,6 @@ Route::prefix('admin/products')->group(function () {
     Route::put('/{product}', [AdminController::class, 'update'])->name('admin.product.update');
 
     Route::delete('/{product}', [AdminController::class, 'destroy'])->name('admin.product.destroy');
+
+    Route::get('/{product}/delete-image', [AdminController::class, 'destroyImage'])->name('admin.product.destroyImage');
 });

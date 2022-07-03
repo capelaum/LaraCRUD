@@ -3,8 +3,8 @@
 @section('content')
 
 <section class="text-gray-600">
-    <div class="container px-5 py-24 mx-auto">
-        <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+    <div class="container px-5 py-24 mx-auto w-full">
+        <div class="w-full mx-auto overflow-auto">
             <div class="flex items-center justify-between mb-2">
                 <h1 class="text-2xl font-medium title-font mb-2 text-gray-900">
                     Produtos
@@ -44,16 +44,19 @@
                     <tr class="even:bg-gray-100 odd:bg-white">
                         <td class="px-4 py-3">{{ $product->id }}</td>
                         <td class="px-4 py-3">
+
                             @php
-                            if ($product->cover && Str::contains($product->cover, 'https://via.placeholder.com')) {
-                            $cover = $product->cover;
-                            } else if($product->cover) {
+                            if($product->cover) {
                             $cover = Storage::disk('public')->url($product->cover);
+                            if (Str::contains($product->cover, 'https://via.placeholder.com')) {
+                            $cover = $product->cover;
+                            }
                             } else {
                             $cover = "https://dummyimage.com/800x450";
                             }
                             @endphp
-                            <img alt="{{ $product->name }}" class="object-cover object-center w-full h-full block"
+
+                            <img alt="{{ $product->name }}" class="object-cover object-center w-full h-[80px]  block"
                                 src="{{ $cover }}" />
                         </td>
                         <td class="px-4 py-3">{{ $product->name }}</td>

@@ -53,13 +53,36 @@
                     <div class="p-2 w-1/2">
                         <div class="relative">
                             <label for="name" class="leading-7 text-sm text-gray-600">Imagem de capa</label>
-                            <input type="file" id="cover" name="cover" value="{{ $product->cover }}"
+                            <input type="file" id="cover" name="cover"
                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                             @error('cover')
                             <p class="text-red-400 text-sm">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
+
+                    @if ($product->cover)
+                    <div class="p-2 w-full flex flex-col items-center">
+                        @php
+                        if($product->cover) {
+                        $cover = Storage::disk('public')->url($product->cover);
+                        if (Str::contains($product->cover, 'https://via.placeholder.com')) {
+                        $cover = $product->cover;
+                        }
+                        } else {
+                        $cover = "https://dummyimage.com/800x450";
+                        }
+                        @endphp
+
+
+                        <img src="{{ $cover }}" alt="{{ $product->name }}"
+                            class="object-cover object-center w-full  block" />
+
+                        <a href="{{ route('admin.product.destroyImage', $product->id) }}"
+                            class="my-2 inline-flex items-center bg-red-500 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded text-white">Deletar
+                            Imagem</a>
+                    </div>
+                    @endif
 
                     <div class="p-2 w-full">
                         <div class="relative">
