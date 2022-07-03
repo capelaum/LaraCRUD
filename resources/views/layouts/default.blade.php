@@ -23,14 +23,14 @@
             </a>
             <div class="flex items-center">
 
-                <button
+                <a href="{{ route('admin.products') }}"
                     class="inline-flex items-center bg-indigo-500 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-600 rounded text-white md:mt-0">
                     Admin
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
                         <path d="M5 12h14M12 5l7 7-7 7"></path>
                     </svg>
-                </button>
+                </a>
             </div>
         </div>
     </header>

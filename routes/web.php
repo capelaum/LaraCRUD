@@ -9,5 +9,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/product/{product:slug}', [ProductController::class, 'show'])->name('product');
 
 // Admin
-Route::get('/admin/products', [AdminController::class, 'index'])->name('admin.products');
-Route::get('/admin/products/edit', [AdminController::class, 'edit'])->name('admin.product_edit');
+Route::prefix('admin/products')->group(function () {
+    Route::get('', [AdminController::class, 'index'])->name('admin.products');
+
+    Route::get('/create', [AdminController::class, 'create'])->name('admin.product.create');
+    Route::post('', [AdminController::class, 'store'])->name('admin.product.store');
+
+    Route::get('/{product}/edit', [AdminController::class, 'edit'])->name('admin.product.edit');
+    Route::put('/{product}', [AdminController::class, 'update'])->name('admin.product.update');
+});
