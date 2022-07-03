@@ -17,4 +17,6 @@ Route::prefix('admin/products')->group(function () {
 
     Route::get('/{product}/edit', [AdminController::class, 'edit'])->name('admin.product.edit');
     Route::put('/{product}', [AdminController::class, 'update'])->name('admin.product.update');
+
+    Route::delete('/{product}', [AdminController::class, 'destroy'])->name('admin.product.destroy');
 });

@@ -79,4 +79,11 @@ class AdminController extends Controller
 
         return $inputCover;
     }
+
+    public function destroy(Product $product)
+    {
+        $product->delete();
+
+        return Redirect::route('admin.products');
+    }
 }
