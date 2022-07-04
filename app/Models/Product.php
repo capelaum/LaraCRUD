@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +21,7 @@ class Product extends Model
         'description'
     ];
 
-    public static function getProductCoverPath(Product $product)
+    public static function getProductCoverPath(Product|Builder $product)
     {
         if ($product->cover) {
             $isPlaceholder = Str::contains($product->cover, 'https://via.placeholder.com');
