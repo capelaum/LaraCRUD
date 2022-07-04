@@ -28,12 +28,12 @@ class StoreProductFormRequest extends FormRequest
 
         $rules = [
             'name' => 'required|string|min:3|max:100|unique:products,name,{$id},id',
-            'price' => 'string|required',
-            'stock' => 'integer|nullable',
-            'description' => 'string|required',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
+            'description' => 'required|string',
             'cover' => [
-                'file',
                 'nullable',
+                'file',
                 'mimes:jpg,png'
             ],
         ];

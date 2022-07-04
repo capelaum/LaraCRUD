@@ -15,7 +15,7 @@
             <form enctype="multipart/form-data" method="POST" action="{{ route('admin.product.store') }}">
                 @csrf
                 <div class="flex flex-wrap">
-                    <div class="p-2 w-1/2">
+                    <div class="p-2 w-full">
                         <div class="relative">
                             <label for="name" class="leading-7 text-sm text-gray-600">Nome do produto</label>
                             <input type="text" id="name" name="name" value="{{ old('name') }}"
@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="p-2 w-1/2">
+                    <div class="p-2 w-full">
                         <div class="relative">
                             <label for="name" class="leading-7 text-sm text-gray-600">Imagem de capa</label>
                             <input type="file" id="cover" name="cover" alue="{{ old('cover') }}"

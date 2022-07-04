@@ -27,7 +27,7 @@ class Product extends Model
 
             $cover = $isPlaceholder ?
                 $product->cover :
-                Storage::disk('public')->url($product->cover);
+                Storage::url($product->cover);
         }
 
         if (!$product->cover) {

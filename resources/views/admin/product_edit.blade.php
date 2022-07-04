@@ -17,10 +17,10 @@
                 @csrf
                 @method('PUT')
                 <div class="flex flex-wrap">
-                    <div class="p-2 w-1/2">
+                    <div class="p-2 w-full">
                         <div class="relative">
                             <label for="name" class="leading-7 text-sm text-gray-600">Nome do produto</label>
-                            <input type="text" id="name" name="name" value="{{ $product->name }}"
+                            <input type="text" id="name" name="name" value="{{ old('name', $product->name) }}"
                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                             @error('name')
                             <p class="text-red-400 text-sm">{{ $message }}</p>
@@ -31,7 +31,7 @@
                     <div class="p-2 w-1/2">
                         <div class="relative">
                             <label for="name" class="leading-7 text-sm text-gray-600">Preço</label>
-                            <input type="text" id="price" name="price" value="{{ $product->price }}"
+                            <input type="text" id="price" name="price" value="{{ old('price', $product->price) }}"
                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                             @error('price')
                             <p class="text-red-400 text-sm">{{ $message }}</p>
@@ -42,7 +42,7 @@
                     <div class="p-2 w-1/2">
                         <div class="relative">
                             <label for="name" class="leading-7 text-sm text-gray-600">Estoque</label>
-                            <input type="text" id="stock" name="stock" value="{{ $product->stock }}"
+                            <input type="text" id="stock" name="stock" value="{{ old('stock', $product->stock) }}"
                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                             @error('stock')
                             <p class="text-red-400 text-sm">{{ $message }}</p>
@@ -50,7 +50,7 @@
                         </div>
                     </div>
 
-                    <div class="p-2 w-1/2">
+                    <div class="p-2 w-full">
                         <div class="relative">
                             <label for="name" class="leading-7 text-sm text-gray-600">Imagem de capa</label>
                             <input type="file" id="cover" name="cover"
@@ -62,7 +62,7 @@
                     </div>
 
                     @if ($product->cover && !Str::contains($product->cover, 'https://dummyimage.com'))
-                    <div class="p-2 w-full flex flex-col items-center">
+                    <div class="p-2 w-full flex flex-col items-start">
 
                         <img src="{{ $product->cover }}" alt="{{ $product->name }}"
                             class="object-cover object-center w-full block" />
@@ -82,7 +82,7 @@
                                 focus:bg-white focus:ring-2 focus:ring-indigo-200
                                 text-base outline-none text-gray-700 py-1 px-3
                                 transition-colors duration-200 ease-in-out
-                                ">{{ $product->description }}</textarea>
+                                ">{{ old('description', $product->description) }}</textarea>
                             @error('description')
                             <p class="text-red-400 text-sm">{{ $message }}</p>
                             @enderror
